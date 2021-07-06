@@ -37,6 +37,7 @@ public class RpcServer {
             //  监听accept()方法，有连接请求时创建新线程并提交给线程池处理
             while((socket = serverSocket.accept()) != null) {
                 logger.info("客户端连接！Ip为：" + socket.getInetAddress());
+                //向工作线程传入socket和用于服务端实例service，并将线程提交到线程池
                 threadPool.execute(new WorkerThread(socket, service));
             }
         } catch (IOException e) {

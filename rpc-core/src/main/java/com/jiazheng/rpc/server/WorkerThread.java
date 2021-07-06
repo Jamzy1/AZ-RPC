@@ -14,7 +14,7 @@ import java.net.Socket;
 
 /**
  * 实际进行过程调用的工作线程，用来处理请求的线程
- * @author ziyang
+ * @author Jamzy
  */
 public class WorkerThread implements Runnable {
 
@@ -33,7 +33,9 @@ public class WorkerThread implements Runnable {
         try (ObjectInputStream objectInputStream = new ObjectInputStream(socket.getInputStream());
              ObjectOutputStream objectOutputStream = new ObjectOutputStream(socket.getOutputStream())) {
             RpcRequest rpcRequest = (RpcRequest) objectInputStream.readObject();
+            //通过class.getMethod方法，传入方法名和方法参数类型即可获得Method对象
             Method method = service.getClass().getMethod(rpcRequest.getMethodName(), rpcRequest.getParamTypes());
+
             Object returnObject = method.invoke(service, rpcRequest.getParameters());
             objectOutputStream.writeObject(RpcResponse.success(returnObject));
             objectOutputStream.flush();

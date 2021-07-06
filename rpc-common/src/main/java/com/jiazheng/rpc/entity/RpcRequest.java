@@ -9,13 +9,13 @@ import lombok.NoArgsConstructor;
 import java.io.Serializable;
 
 /**
- * 客户端调用服务端的请求体：用于确定具体要调用服务端的哪一个方法
+ * 客户端调用服务端的请求体：用于唯一确定具体要调用服务端的哪一个方法
  *
  * @author Jamzy
  *
  */
 @Data
-@Builder
+@Builder        //builder注解是为了后面代理对象被调用时方便生成RpcRequest对象
 @AllArgsConstructor
 @NoArgsConstructor
 public class RpcRequest implements Serializable {

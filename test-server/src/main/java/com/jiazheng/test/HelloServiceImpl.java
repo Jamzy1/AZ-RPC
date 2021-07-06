@@ -6,7 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 
-//  在服务端这边对通用接口做一个简单的实现，返回一个字符串
+//  在服务端这边对通用接口做一个简单的实现，返回一个字符串（只有服务端有接口的实现方法）
 public class HelloServiceImpl implements HelloService {
 
     private static final Logger logger =
