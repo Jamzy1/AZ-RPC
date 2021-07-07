@@ -13,8 +13,11 @@ public class TestServer {
 
     public static void main(String[] args) {
         HelloService helloService = new HelloServiceImpl();
+        HelloService2Impl helloService2 = new HelloService2Impl();
         ServiceRegistry serviceRegistry = new DefaultServiceRegistry();
+        //将服务注册进注册表
         serviceRegistry.register(helloService);
+        serviceRegistry.register(helloService2);
         RpcServer rpcServer = new RpcServer(serviceRegistry);
         rpcServer.start(9000);
     }

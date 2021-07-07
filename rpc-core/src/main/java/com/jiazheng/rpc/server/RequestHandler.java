@@ -12,6 +12,9 @@ import java.lang.reflect.Method;
 /**
  * 进行过程调用的处理器
  *
+ * RequestHandlerThread 只是一个线程，从ServiceRegistry 获取到提供服务的对象后，就会把 RpcRequest 和服务对象直接交给 RequestHandler 去处理，
+ * 反射等过程被放到了 RequestHandler 里。
+ *
  * @author Jamzy
  */
 public class RequestHandler {
@@ -36,6 +39,7 @@ public class RequestHandler {
         } catch (NoSuchMethodException e) {
             return RpcResponse.fail(ResponseCode.METHOD_NOT_FOUND);
         }
+        //通过反射进行方法调用
         return method.invoke(service, rpcRequest.getParameters());
     }
 }

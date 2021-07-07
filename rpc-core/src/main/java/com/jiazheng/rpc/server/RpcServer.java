@@ -31,7 +31,7 @@ public class RpcServer {
 
 
     /**
-     * 为了降低耦合度，我们不会把 ServiceRegistry 和某一个 RpcServer 绑定在一起，而是在创建 RpcServer
+     * 为了降低耦合度，不要把 ServiceRegistry 和某一个 RpcServer 绑定在一起，而是在创建 RpcServer
      * 对象时，传入一个 ServiceRegistry 作为这个服务的注册表。
      */
     public RpcServer(ServiceRegistry serviceRegistry) {
@@ -50,7 +50,7 @@ public class RpcServer {
             while ((socket = serverSocket.accept()) != null) {
                 logger.info("消费者连接：{}:{}",
                         socket.getInetAddress(), socket.getPort());
-                //向工作线程传入socket和用于服务端实例service，并将线程提交到线程池
+                //向工作线程传入socket,requestHandler, serviceRegistry，并将线程提交到线程池
                 threadPool.execute(new RequestHandlerThread(socket,
                         requestHandler, serviceRegistry));
             }

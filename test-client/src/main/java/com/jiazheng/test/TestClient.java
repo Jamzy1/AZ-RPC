@@ -1,7 +1,9 @@
 package com.jiazheng.test;
 
 import com.jiazheng.rpc.api.HelloObject;
+import com.jiazheng.rpc.api.HelloObject2;
 import com.jiazheng.rpc.api.HelloService;
+import com.jiazheng.rpc.api.HelloService2;
 import com.jiazheng.rpc.client.RpcClientProxy;
 
 /**
@@ -17,10 +19,14 @@ public class TestClient {
         RpcClientProxy proxy = new RpcClientProxy("127.0.0.1", 9000);
         //这个helloService就是代理对象
         HelloService helloService = proxy.getProxy(HelloService.class);
+        HelloService2 helloService2 = proxy.getProxy(HelloService2.class);
         HelloObject object = new HelloObject(12, "This is a message");
+        HelloObject2 object2 = new HelloObject2(12, "This is a message");
         //这里调用代理对象的方法时，会先调用代理类中的invoke方法
         String res = helloService.hello(object);
+        String res2 = helloService2.hello2(object2);
         System.out.println(res);
+        System.out.println(res2);
     }
 
 }

@@ -34,9 +34,14 @@ public class RequestHandlerThread implements Runnable {
         try (ObjectInputStream objectInputStream = new ObjectInputStream(socket.getInputStream());
              ObjectOutputStream objectOutputStream = new ObjectOutputStream(socket.getOutputStream())) {
             RpcRequest rpcRequest = (RpcRequest) objectInputStream.readObject();
+            //从客户端的请求体中拿到要调用的服务名称
             String interfaceName = rpcRequest.getInterfaceName();
+            //从服务注册表中拿到要调用的服务端的具体服务
             Object service = serviceRegistry.getService(interfaceName);
+            //将请求和服务传入处理器
             Object result = requestHandler.handle(rpcRequest, service);
+
+            //请求的回应信息，会传给客户端
             objectOutputStream.writeObject(RpcResponse.success(result));
             objectOutputStream.flush();
         } catch (IOException | ClassNotFoundException e) {
