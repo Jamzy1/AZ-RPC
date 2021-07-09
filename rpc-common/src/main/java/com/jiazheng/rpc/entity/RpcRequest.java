@@ -2,7 +2,6 @@ package com.jiazheng.rpc.entity;
 
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -15,7 +14,7 @@ import java.io.Serializable;
  *
  */
 @Data
-@Builder        //builder注解是为了后面代理对象被调用时方便生成RpcRequest对象
+//@Builder        //builder注解是为了后面代理对象被调用时方便生成RpcRequest对象
 @AllArgsConstructor
 @NoArgsConstructor
 public class RpcRequest implements Serializable {

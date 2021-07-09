@@ -21,10 +21,11 @@ public class DefaultServiceRegistry implements ServiceRegistry{
     //保存服务名与提供服务的对象的对应关系
     //默认采用这个对象实现的接口的完整类名作为服务名
     //一个服务名（接口）只能有一个对象提供服务
-    private final Map<String, Object> serviceMap = new ConcurrentHashMap<>();
+    private static final Map<String, Object> serviceMap = new ConcurrentHashMap<>();
 
     //已注册服务的集合
-    private final Set<String> registeredService = ConcurrentHashMap.newKeySet();
+    private static final Set<String> registeredService =
+            ConcurrentHashMap.newKeySet();
 
 
     @Override

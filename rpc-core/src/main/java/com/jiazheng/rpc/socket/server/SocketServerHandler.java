@@ -1,5 +1,6 @@
-package com.jiazheng.rpc.server;
+package com.jiazheng.rpc.socket.server;
 
+import com.jiazheng.rpc.RequestHandler;
 import com.jiazheng.rpc.entity.RpcRequest;
 import com.jiazheng.rpc.entity.RpcResponse;
 import com.jiazheng.rpc.registry.ServiceRegistry;
@@ -15,15 +16,15 @@ import java.net.Socket;
  * 处理RpcRequest的工作线程
  * @author Jamzy
  */
-public class RequestHandlerThread implements Runnable {
+public class SocketServerHandler implements Runnable {
 
-    private static final Logger logger = LoggerFactory.getLogger(RequestHandlerThread.class);
+    private static final Logger logger = LoggerFactory.getLogger(SocketServerHandler.class);
 
     private Socket socket;
     private RequestHandler requestHandler;
     private ServiceRegistry serviceRegistry;
 
-    public RequestHandlerThread(Socket socket, RequestHandler requestHandler, ServiceRegistry serviceRegistry) {
+    public SocketServerHandler(Socket socket, RequestHandler requestHandler, ServiceRegistry serviceRegistry) {
         this.socket = socket;
         this.requestHandler = requestHandler;
         this.serviceRegistry = serviceRegistry;

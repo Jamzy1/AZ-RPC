@@ -1,6 +1,6 @@
-package com.jiazheng.rpc.client;
+package com.jiazheng.rpc;
 
-import com.jiazheng.rpc.entity.RpcResponse;
+import com.jiazheng.rpc.socket.client.SocketClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.jiazheng.rpc.entity.RpcRequest;
@@ -18,12 +18,11 @@ import java.lang.reflect.Proxy;
 public class RpcClientProxy implements InvocationHandler {
 
     private static final Logger logger = LoggerFactory.getLogger(RpcClientProxy.class);
-    private String host;
-    private int port;
 
-    public RpcClientProxy(String host, int port) {
-        this.host = host;
-        this.port = port;
+    private final RpcClient client;
+
+    public RpcClientProxy(RpcClient client){
+        this.client = client;
     }
 
     //  Proxy类就是用来创建一个代理对象的类，这里使用最常用的newProxyInstance()方法来生成代理对象
@@ -31,6 +30,8 @@ public class RpcClientProxy implements InvocationHandler {
     public <T> T getProxy(Class<T> clazz) {
         return (T) Proxy.newProxyInstance(clazz.getClassLoader(), new Class<?>[]{clazz}, this);
     }
+
+
 
     //代理对象的方法被调用时，会先调用这个invoke方法。生成一个RpcRequest对象
     /**
@@ -46,14 +47,9 @@ public class RpcClientProxy implements InvocationHandler {
         logger.info("调用方法: {}#{}", method.getDeclaringClass().getName(),
                 method.getName());
         //构建rpcRequest
-        RpcRequest rpcRequest = RpcRequest.builder()
-                .interfaceName(method.getDeclaringClass().getName())
-                .methodName(method.getName())
-                .parameters(args)
-                .paramTypes(method.getParameterTypes())
-                .build();
-        //通过sendRequest发送给服务端，并调用getData()获得响应数据
-        RpcClient rpcClient = new RpcClient();
-        return ((RpcResponse)rpcClient.sendRequest(rpcRequest, host, port)).getData();
+        RpcRequest rpcRequest = new RpcRequest(method.getDeclaringClass().getName(), method.getName()
+                , args, method.getParameterTypes());
+        //通过sendRequest发送给服务端
+        return client.sendRequest(rpcRequest);
     }
 }

@@ -1,4 +1,4 @@
-package com.jiazheng.rpc.server;
+package com.jiazheng.rpc;
 
 import com.jiazheng.rpc.entity.RpcRequest;
 import com.jiazheng.rpc.entity.RpcResponse;
