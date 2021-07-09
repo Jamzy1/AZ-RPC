@@ -6,7 +6,7 @@ import com.jiazheng.rpc.entity.RpcRequest;
 import com.jiazheng.rpc.entity.RpcResponse;
 import com.jiazheng.rpc.enumeration.ResponseCode;
 import com.jiazheng.rpc.enumeration.RpcError;
-import com.jiazheng.rpc.enumeration.RpcException;
+import com.jiazheng.rpc.exception.RpcException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

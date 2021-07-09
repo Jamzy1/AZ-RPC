@@ -1,4 +1,6 @@
-package com.jiazheng.rpc.enumeration;
+package com.jiazheng.rpc.exception;
+
+import com.jiazheng.rpc.enumeration.RpcError;
 
 /**
  * RPC调用异常

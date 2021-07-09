@@ -4,7 +4,7 @@ import com.jiazheng.rpc.entity.RpcRequest;
 import com.jiazheng.rpc.entity.RpcResponse;
 import com.jiazheng.rpc.enumeration.PackageType;
 import com.jiazheng.rpc.enumeration.RpcError;
-import com.jiazheng.rpc.enumeration.RpcException;
+import com.jiazheng.rpc.exception.RpcException;
 import com.jiazheng.rpc.serializer.CommonSerializer;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;

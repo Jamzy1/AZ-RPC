@@ -1,6 +1,6 @@
 package com.jiazheng.test;
 
-import com.jiazheng.rpc.api.HelloObject;
+
 import com.jiazheng.rpc.api.HelloObject2;
 import com.jiazheng.rpc.api.HelloService2;
 import org.slf4j.Logger;
