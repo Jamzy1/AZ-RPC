@@ -40,6 +40,8 @@ public class RequestHandlerThread implements Runnable {
             RpcRequest rpcRequest = (RpcRequest) ObjectReader.readObject(inputStream);
             Object result = requestHandler.handle(rpcRequest);
             RpcResponse<Object> response = RpcResponse.success(result, rpcRequest.getRequestId());
+
+            //执行完成返回给客户端，要进行序列化
             ObjectWriter.writeObject(outputStream, response, serializer);
         } catch (IOException e) {
             logger.error("调用或发送时有错误发生：", e);

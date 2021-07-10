@@ -8,6 +8,8 @@ import java.io.IOException;
 import java.io.OutputStream;
 
 /**
+ * Socket方式将结果序列化后写入输出流
+ *
  * @author Jamzy
  */
 public class ObjectWriter {

@@ -2,7 +2,9 @@ package com.jiazheng.rpc.transport.netty.client;
 
 import com.jiazheng.rpc.enumeration.RpcError;
 import com.jiazheng.rpc.exception.RpcException;
+import com.jiazheng.rpc.registry.NacosServiceDiscovery;
 import com.jiazheng.rpc.registry.NacosServiceRegistry;
+import com.jiazheng.rpc.registry.ServiceDiscovery;
 import com.jiazheng.rpc.registry.ServiceRegistry;
 import com.jiazheng.rpc.serializer.CommonSerializer;
 import com.jiazheng.rpc.transport.RpcClient;
@@ -31,12 +33,12 @@ public class NettyClient implements RpcClient {
 
 
     private static final Bootstrap bootstrap;
-    private final ServiceRegistry serviceRegistry;
+    private final ServiceDiscovery serviceDiscovery;
 
     private CommonSerializer serializer;
 
     public NettyClient() {
-        this.serviceRegistry = new NacosServiceRegistry();
+        this.serviceDiscovery = new NacosServiceDiscovery();
     }
 
     static {
@@ -59,7 +61,7 @@ public class NettyClient implements RpcClient {
         try {
 
 
-            InetSocketAddress inetSocketAddress = serviceRegistry.lookupService(rpcRequest.getInterfaceName());
+            InetSocketAddress inetSocketAddress = serviceDiscovery.lookupService(rpcRequest.getInterfaceName());
             Channel channel = ChannelProvider.get(inetSocketAddress, serializer);
             if(channel.isActive()) {
                 channel.writeAndFlush(rpcRequest).addListener(future1 -> {
@@ -75,6 +77,7 @@ public class NettyClient implements RpcClient {
                 RpcMessageChecker.check(rpcRequest, rpcResponse);
                 result.set(rpcResponse.getData());
             } else {
+                channel.close();
                 System.exit(0);
             }
         } catch (InterruptedException e) {
