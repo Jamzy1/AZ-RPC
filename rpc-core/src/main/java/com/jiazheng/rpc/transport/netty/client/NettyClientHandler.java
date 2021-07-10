@@ -1,4 +1,4 @@
-package com.jiazheng.rpc.netty.client;
+package com.jiazheng.rpc.transport.netty.client;
 
 import com.jiazheng.rpc.entity.RpcResponse;
 import io.netty.channel.ChannelHandlerContext;
@@ -22,7 +22,7 @@ public class NettyClientHandler extends SimpleChannelInboundHandler<RpcResponse>
 
         try {
             logger.info(String.format("客户端接收到消息: %s", msg));
-            AttributeKey<RpcResponse> key = AttributeKey.valueOf("rpcResponse");
+            AttributeKey<RpcResponse> key = AttributeKey.valueOf("rpcResponse"+msg.getRequestId());
             ctx.channel().attr(key).set(msg);
             ctx.channel().close();
         } finally {

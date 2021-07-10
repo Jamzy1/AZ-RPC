@@ -14,10 +14,14 @@ import java.io.Serializable;
  *
  */
 @Data
-//@Builder        //builder注解是为了后面代理对象被调用时方便生成RpcRequest对象
 @AllArgsConstructor
 @NoArgsConstructor
 public class RpcRequest implements Serializable {
+
+    /**
+     * 请求号
+     */
+    private String requestId;
 
     /**
      * 待调用接口名称

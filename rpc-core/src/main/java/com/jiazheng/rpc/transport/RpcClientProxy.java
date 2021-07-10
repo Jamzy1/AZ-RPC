@@ -1,6 +1,5 @@
-package com.jiazheng.rpc;
+package com.jiazheng.rpc.transport;
 
-import com.jiazheng.rpc.socket.client.SocketClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.jiazheng.rpc.entity.RpcRequest;
@@ -8,6 +7,7 @@ import com.jiazheng.rpc.entity.RpcRequest;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
+import java.util.UUID;
 
 /**
  * RPC客户端  没有接口的实现类，所以用动态代理生成实例
@@ -43,11 +43,11 @@ public class RpcClientProxy implements InvocationHandler {
      * @throws Throwable
      */
     @Override
-    public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
+    public Object invoke(Object proxy, Method method, Object[] args) {
         logger.info("调用方法: {}#{}", method.getDeclaringClass().getName(),
                 method.getName());
         //构建rpcRequest
-        RpcRequest rpcRequest = new RpcRequest(method.getDeclaringClass().getName(), method.getName()
+        RpcRequest rpcRequest = new RpcRequest(UUID.randomUUID().toString(),method.getDeclaringClass().getName(), method.getName()
                 , args, method.getParameterTypes());
         //通过sendRequest发送给服务端
         return client.sendRequest(rpcRequest);

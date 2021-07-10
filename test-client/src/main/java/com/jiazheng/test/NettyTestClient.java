@@ -1,10 +1,11 @@
 package com.jiazheng.test;
 
-import com.jiazheng.rpc.RpcClient;
-import com.jiazheng.rpc.RpcClientProxy;
+import com.jiazheng.rpc.serializer.KryoSerializer;
+import com.jiazheng.rpc.transport.RpcClient;
+import com.jiazheng.rpc.transport.RpcClientProxy;
 import com.jiazheng.rpc.api.HelloObject;
 import com.jiazheng.rpc.api.HelloService;
-import com.jiazheng.rpc.netty.client.NettyClient;
+import com.jiazheng.rpc.transport.netty.client.NettyClient;
 
 /**
  * 测试用Netty消费者
@@ -13,7 +14,8 @@ import com.jiazheng.rpc.netty.client.NettyClient;
 public class NettyTestClient {
 
     public static void main(String[] args) {
-        RpcClient client = new NettyClient("127.0.0.1", 9999);
+        RpcClient client = new NettyClient();
+        client.setSerializer(new KryoSerializer());
         RpcClientProxy rpcClientProxy = new RpcClientProxy(client);
         HelloService helloService = rpcClientProxy.getProxy(HelloService.class);
         HelloObject object = new HelloObject(12, "This is a message");
