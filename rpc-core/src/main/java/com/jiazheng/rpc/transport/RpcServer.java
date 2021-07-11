@@ -8,9 +8,11 @@ import com.jiazheng.rpc.serializer.CommonSerializer;
  * @author Jamzy
  */
 public interface RpcServer {
+
+    int DEFAULT_SERIALIZER = CommonSerializer.KRYO_SERIALIZER;
+
     void start();
 
-    void setSerializer(CommonSerializer serializer);
 
     <T> void publishService(T service, Class<T> serviceClass);
 }

@@ -24,7 +24,7 @@ public class NacosServiceDiscovery implements ServiceDiscovery{
     @Override
     public InetSocketAddress lookupService(String serviceName) {
         try {
-            List<Instance> instances = NacosUtil.getAllInstance(namingService, serviceName);
+            List<Instance> instances = NacosUtil.getAllInstance(serviceName);
             Instance instance = instances.get(0);
             return new InetSocketAddress(instance.getIp(), instance.getPort());
         } catch (NacosException e) {

@@ -36,14 +36,19 @@ public class SocketClient implements RpcClient {
 
     private final ServiceDiscovery serviceDiscovery;
 
-    private CommonSerializer serializer;
+    private final CommonSerializer serializer;
 
     public SocketClient() {
+        this(DEFAULT_SERIALIZER);
+    }
+
+    public SocketClient(Integer serializer) {
         this.serviceDiscovery = new NacosServiceDiscovery();
+        this.serializer = CommonSerializer.getByCode(serializer);
     }
 
 
-    //    客户端的请求方法，rpcRequest请求体（确定调用的方法），默认客户端知道服务器的主机和端口
+    //    客户端的请求方法，rpcRequest请求体（确定调用的方法）
     @Override
     public Object sendRequest(RpcRequest rpcRequest) {
         if(serializer == null) {
@@ -75,8 +80,4 @@ public class SocketClient implements RpcClient {
         }
     }
 
-    @Override
-    public void setSerializer(CommonSerializer serializer) {
-        this.serializer = serializer;
-    }
 }
