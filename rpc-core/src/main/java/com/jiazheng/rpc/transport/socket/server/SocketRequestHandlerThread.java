@@ -3,7 +3,6 @@ package com.jiazheng.rpc.transport.socket.server;
 import com.jiazheng.rpc.handler.RequestHandler;
 import com.jiazheng.rpc.entity.RpcRequest;
 import com.jiazheng.rpc.entity.RpcResponse;
-import com.jiazheng.rpc.registry.ServiceRegistry;
 import com.jiazheng.rpc.serializer.CommonSerializer;
 import com.jiazheng.rpc.transport.socket.util.ObjectReader;
 import com.jiazheng.rpc.transport.socket.util.ObjectWriter;

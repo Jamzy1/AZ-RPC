@@ -1,5 +1,6 @@
 package com.jiazheng.test;
 
+import com.jiazheng.rpc.api.ByeService;
 import com.jiazheng.rpc.api.HelloObject;
 import com.jiazheng.rpc.api.HelloService;
 import com.jiazheng.rpc.serializer.CommonSerializer;
@@ -25,8 +26,9 @@ public class SocketTestClient {
 
         //这里调用代理对象的方法时，会先调用代理类中的invoke方法
         String res = helloService.hello(object);
-
         System.out.println(res);
+        ByeService byeService = proxy.getProxy(ByeService.class);
+        System.out.println(byeService.bye("Netty"));
 
     }
 

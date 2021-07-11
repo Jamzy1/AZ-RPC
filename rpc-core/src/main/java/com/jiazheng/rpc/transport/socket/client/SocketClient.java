@@ -2,10 +2,10 @@ package com.jiazheng.rpc.transport.socket.client;
 
 
 
+import com.jiazheng.rpc.loadbalancer.LoadBalancer;
+import com.jiazheng.rpc.loadbalancer.RandomLoadBalancer;
 import com.jiazheng.rpc.registry.NacosServiceDiscovery;
-import com.jiazheng.rpc.registry.NacosServiceRegistry;
 import com.jiazheng.rpc.registry.ServiceDiscovery;
-import com.jiazheng.rpc.registry.ServiceRegistry;
 import com.jiazheng.rpc.serializer.CommonSerializer;
 import com.jiazheng.rpc.transport.RpcClient;
 import com.jiazheng.rpc.entity.RpcRequest;
@@ -39,11 +39,18 @@ public class SocketClient implements RpcClient {
     private final CommonSerializer serializer;
 
     public SocketClient() {
-        this(DEFAULT_SERIALIZER);
+        this(DEFAULT_SERIALIZER, new RandomLoadBalancer());
+    }
+    public SocketClient(LoadBalancer loadBalancer) {
+        this(DEFAULT_SERIALIZER, loadBalancer);
     }
 
     public SocketClient(Integer serializer) {
-        this.serviceDiscovery = new NacosServiceDiscovery();
+        this(serializer, new RandomLoadBalancer());
+    }
+
+    public SocketClient(Integer serializer, LoadBalancer loadBalancer) {
+        this.serviceDiscovery = new NacosServiceDiscovery(loadBalancer);
         this.serializer = CommonSerializer.getByCode(serializer);
     }
 
@@ -73,7 +80,7 @@ public class SocketClient implements RpcClient {
                 throw new RpcException(RpcError.SERVICE_INVOCATION_FAILURE, " service:" + rpcRequest.getInterfaceName());
             }
             RpcMessageChecker.check(rpcRequest, rpcResponse);
-            return rpcResponse.getData();
+            return rpcResponse;
         } catch (IOException e) {
             logger.error("调用时有错误发生：", e);
             throw new RpcException("服务调用失败: ", e);

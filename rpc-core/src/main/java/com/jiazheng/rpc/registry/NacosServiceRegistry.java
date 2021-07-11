@@ -1,9 +1,6 @@
 package com.jiazheng.rpc.registry;
 
 import com.alibaba.nacos.api.exception.NacosException;
-import com.alibaba.nacos.api.naming.NamingFactory;
-import com.alibaba.nacos.api.naming.NamingService;
-import com.alibaba.nacos.api.naming.pojo.Instance;
 import com.jiazheng.rpc.enumeration.RpcError;
 import com.jiazheng.rpc.exception.RpcException;
 import com.jiazheng.rpc.util.NacosUtil;
@@ -11,7 +8,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.net.InetSocketAddress;
-import java.util.List;
 
 /**
  * Nacos服务注册中心

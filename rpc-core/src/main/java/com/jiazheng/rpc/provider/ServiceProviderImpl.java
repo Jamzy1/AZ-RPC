@@ -31,8 +31,7 @@ public class ServiceProviderImpl implements ServiceProvider {
 
 
     @Override
-    public <T> void addServiceProvider(T service, Class<T> serviceClass) {
-        String serviceName = serviceClass.getCanonicalName();
+    public <T> void addServiceProvider(T service, String serviceName) {
         if (registeredService.contains(serviceName)) return;
         registeredService.add(serviceName);
         serviceMap.put(serviceName, service);

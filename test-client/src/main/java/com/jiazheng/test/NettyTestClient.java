@@ -1,5 +1,6 @@
 package com.jiazheng.test;
 
+import com.jiazheng.rpc.api.ByeService;
 import com.jiazheng.rpc.serializer.CommonSerializer;
 import com.jiazheng.rpc.transport.RpcClient;
 import com.jiazheng.rpc.transport.RpcClientProxy;
@@ -20,7 +21,8 @@ public class NettyTestClient {
         HelloObject object = new HelloObject(12, "This is a message");
         String res = helloService.hello(object);
         System.out.println(res);
-
+        ByeService byeService = rpcClientProxy.getProxy(ByeService.class);
+        System.out.println(byeService.bye("Netty"));
     }
 
 }
